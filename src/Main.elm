@@ -15,7 +15,8 @@
 
 
 module Main exposing
-    ( createPerson
+    ( MaritalStatus
+    , createPerson
     , editFirstName
     , editLastName
     , editNumber
