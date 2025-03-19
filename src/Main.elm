@@ -175,6 +175,10 @@ validateLastName =
    to make it a String, consider the length, and then parse it into an Int
    to validate that it only contains digits
 
+   I also considered making SSN a tuple, but Elm doesn't like tuples with
+   a length of more than 3 :(. There is a lib for more than 3, but figured
+   I would solve this with the standard library
+
    If I was really wanting to make clear distictions with these numbers
    I'd create newtypes for ssn and phone number to make that more clear
    in the code
