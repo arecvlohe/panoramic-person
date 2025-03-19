@@ -169,22 +169,22 @@ validateLastName =
 
 {-
    SSNs are numbers that are 9 digits long.
-   This ensure they are at at least 9 digits long
+   This ensure they are 9 digits long
 -}
 
 
 validateSocial : Int -> Bool
 validateSocial int =
-    int > 99999999
+    int > 99999999 && int < 1000000000
 
 
 
 {-
    Phone numbers, plus area code, are numbers that are 10 digits long.
-   This ensure they are at at least 10 digits long
+   This ensure they are 10 digits long
 -}
 
 
 validateNumber : Int -> Bool
 validateNumber int =
-    int > 999999999
+    int > 999999999 && int < 10000000000
