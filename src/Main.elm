@@ -73,6 +73,17 @@ type Person state
     = Person Fields
 
 
+personValidated : Person Validated
+personValidated =
+    Person
+        { firstName = ""
+        , lastName = ""
+        , socialSecurityNumber = ""
+        , maritalStatus = Single
+        , phoneNumber = ""
+        }
+
+
 createPerson : Person Editing
 createPerson =
     Person
@@ -94,8 +105,8 @@ createPerson =
 -}
 
 
-editPerson : Person Editing -> Person Editing
-editPerson (Person fields) =
+editPerson : Fields -> Person Editing -> Person Editing
+editPerson fields (Person _) =
     Person fields
 
 
