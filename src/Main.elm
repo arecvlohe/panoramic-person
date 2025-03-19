@@ -54,9 +54,9 @@ type MaritalStatus
 type alias Fields =
     { firstName : String
     , lastName : String
-    , socialSecurityNumber : Int
+    , socialSecurityNumber : String
     , maritalStatus : MaritalStatus
-    , phoneNumber : Int
+    , phoneNumber : String
     }
 
 
@@ -78,9 +78,9 @@ createPerson =
     Person
         { firstName = ""
         , lastName = ""
-        , socialSecurityNumber = 0
+        , socialSecurityNumber = ""
         , maritalStatus = Single
-        , phoneNumber = 0
+        , phoneNumber = ""
         }
 
 
@@ -117,7 +117,7 @@ editLastName name (Person fields) =
     Person { fields | lastName = name }
 
 
-editSocial : Int -> Person Editing -> Person Editing
+editSocial : String -> Person Editing -> Person Editing
 editSocial social (Person fields) =
     Person { fields | socialSecurityNumber = social }
 
@@ -127,7 +127,7 @@ editStatus status (Person fields) =
     Person { fields | maritalStatus = status }
 
 
-editNumber : Int -> Person Editing -> Person Editing
+editNumber : String -> Person Editing -> Person Editing
 editNumber number (Person fields) =
     Person { fields | phoneNumber = number }
 
@@ -169,23 +169,54 @@ validateLastName =
 
 
 {-
-   SSNs are numbers that are 9 digits long.
-   This ensure they are 9 digits long
+   I considered making SSN an Int as opposed to a String
+   but that seemed to make it more difficult to validate because
+   there aren't helpers to validate the length of an Int. I think it's better
+   to make it a String, consider the length, and then parse it into an Int
+   to validate that it only contains digits
+
+   If I was really wanting to make clear distictions with these numbers
+   I'd create newtypes for ssn and phone number to make that more clear
+   in the code
 -}
 
 
-validateSocial : Int -> Bool
-validateSocial int =
-    int > 99999999 && int < 1000000000
+validateSocial : String -> Bool
+validateSocial ssn =
+    (ssn |> String.isEmpty |> not)
+        && (String.length ssn == 10)
+        && (ssn
+                |> String.toInt
+                |> (\m ->
+                        case m of
+                            Just _ ->
+                                True
+
+                            Nothing ->
+                                False
+                   )
+           )
 
 
 
 {-
-   Phone numbers, plus area code, are numbers that are 10 digits long.
-   This ensure they are 10 digits long
+   Phone numbers, plus area code, are numbers that are 10 digits long
+   and only contains digits
 -}
 
 
-validateNumber : Int -> Bool
-validateNumber int =
-    int > 999999999 && int < 10000000000
+validateNumber : String -> Bool
+validateNumber number =
+    (number |> String.isEmpty |> not)
+        && (String.length number == 10)
+        && (number
+                |> String.toInt
+                |> (\m ->
+                        case m of
+                            Just _ ->
+                                True
+
+                            Nothing ->
+                                False
+                   )
+           )
